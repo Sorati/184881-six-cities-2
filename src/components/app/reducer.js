@@ -5,37 +5,49 @@ export const INITIAL_STATE = {
   initOffers: [],
   offers: [],
   activeCard: null,
+  activeCardComments: [],
+  activeCardNears: [],
   actualCities: [],
   isAuthorizationRequired: true,
   user: {},
   availableSorts: [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`],
+  userFavorites: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case `CHANGE_CITY`:
-      return Object.assign({}, state, {city: action.payload});
+      return {...state, city: action.payload};
 
     case `SET_INIT_OFFERS`:
-      return Object.assign({}, state, {initOffers: action.payload});
+      return {...state, initOffers: action.payload};
 
     case `CHANGE_OFFERS`:
-      return Object.assign({}, state, {offers: action.payload});
+      return {...state, offers: action.payload};
 
     case `CHANGE_ACTUAL_CITIES`:
-      return Object.assign({}, state, {actualCities: action.payload});
+      return {...state, actualCities: action.payload};
 
     case `CHANGE_SORT_TYPE`:
-      return Object.assign({}, state, {sortType: action.payload});
+      return {...state, sortType: action.payload};
 
     case `SET_ACTIVE_CARD`:
-      return Object.assign({}, state, {activeCard: action.payload});
+      return {...state, activeCard: {...action.payload}};
 
     case `CHANGE_LOGIN_STATUS`:
-      return Object.assign({}, state, {isAuthorizationRequired: action.payload});
+      return {...state, isAuthorizationRequired: action.payload};
 
     case `SET_USER_INFO`:
-      return Object.assign({}, state, {user: action.payload});
+      return {...state, user: action.payload};
+
+    case `SET_USER_FAVORITES`:
+      return {...state, userFavorites: action.payload};
+
+    case `SET_ACTIVE_COMMENTS`:
+      return {...state, activeCardComments: action.payload};
+
+    case `SET_NEAR_CARDS`:
+      return {...state, activeCardNears: action.payload};
 
     case `RESET`:
       return Object.assign({}, INITIAL_STATE);

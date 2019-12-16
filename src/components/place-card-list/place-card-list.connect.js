@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import PlaceCardList from './place-card-list';
-import * as ActionCreator from './actions';
+import * as AppActionCreator from '../app/actions';
+
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   cards: state.app.offers,
@@ -10,9 +11,8 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 
 const mapDispatchToProps = (dispatch) => ({
   onCardHover: (card) => {
-    dispatch(ActionCreator.setActiveCard(card));
-  }
+    dispatch(AppActionCreator.setActiveCard(card));
+  },
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaceCardList);

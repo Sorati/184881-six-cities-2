@@ -1,39 +1,28 @@
-import withActiveItem from '../../hocs/withActiveItem';
+const PlacesOptionList = (props) => {
+  const {isOpen, sortType, availableSorts, optionsClickHandler} = props;
 
-class PlacesOptionList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
+  return (
+    <ul
+      className={`places__options places__options--custom ` + (isOpen && `places__options--opened`)}>
+      {availableSorts.map((item) => {
+        return (
+          <li
+            className={`places__option ` + ((sortType === item) && `places__option--active`)}
+            tabIndex="0"
+            onClick={() => {
+              optionsClickHandler(item);
+            }}
+            key={`sort-` + item}>{item}</li>
+        );
+      })}
+    </ul>
+  );
+};
 
-  render() {
-
-    const {isOpen, activeItem, availableSorts, optionsClickHandler, onSelectActiveElement} = this.props;
-
-    return (
-      <ul
-        className={`places__options places__options--custom ` + (isOpen && `places__options--opened`)}>
-        {availableSorts.map((item) => {
-          return (
-            <li
-              className={`places__option ` + ((activeItem === item) && `places__option--active`)}
-              tabIndex="0"
-              onClick={() => {
-                optionsClickHandler(item);
-                onSelectActiveElement(item);
-              }}
-              key={`sort-` + item}>{item}</li>
-          );
-        })}
-      </ul>
-    );
-  }
-}
-
-export default withActiveItem(PlacesOptionList);
+export default PlacesOptionList;
 
 PlacesOptionList.propTypes = {
-  onSelectActiveElement: PropTypes.func.isRequired,
-  activeItem: PropTypes.string.isRequired,
+  sortType: PropTypes.string.isRequired,
   availableSorts: PropTypes.arrayOf(PropTypes.string.isRequired),
   isOpen: PropTypes.bool,
   optionsClickHandler: PropTypes.func.isRequired,

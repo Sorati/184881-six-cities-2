@@ -1,3 +1,5 @@
+const HTTP_SUCCESS_STATUS = 200;
+
 export const changeLoginRequired = (isRequired) => ({
   type: `CHANGE_LOGIN_STATUS`,
   payload: isRequired
@@ -10,7 +12,7 @@ export const login = (state, dispatch, getState, api) => {
       password: state.password
     })
     .then((respond) => {
-      if (respond.status === 200) {
+      if (respond.status === HTTP_SUCCESS_STATUS) {
         dispatch(changeLoginRequired(!getState().app.isAuthorizationRequired));
 
         dispatch({

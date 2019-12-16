@@ -1,23 +1,23 @@
 import withAuthReqiure from '../../hocs/withAuthRequire';
+import {
+  Link
+} from 'react-router-dom';
 
 class PlaceCard extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isCardFavorite: this.props.isFavorite,
-    };
-
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
 
   _favoriteClickHandler() {
 
-    this.setState((prevState) => ({
-      isCardFavorite: !prevState.isCardFavorite
-    }));
+    const {id, isFavorite, isAuthorizationRequired, onClickToAuthRequire, changeFavoriteStatus} = this.props;
 
-    this.props.onClickToAuthRequire(this.props.isAuthorizationRequired);
+    if (isAuthorizationRequired) {
+      onClickToAuthRequire(isAuthorizationRequired);
+    } else {
+      changeFavoriteStatus(id, isFavorite);
+    }
   }
 
   render() {
@@ -31,6 +31,7 @@ class PlaceCard extends React.PureComponent {
       type,
       mark,
       isNear,
+      isFavorite,
       onCardHover,
       onCardHoverOut
     } = this.props;
@@ -56,7 +57,7 @@ class PlaceCard extends React.PureComponent {
               <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className={`place-card__bookmark-button button ` + (this.state.isCardFavorite && `place-card__bookmark-button--active`)} type="button" onClick={this._favoriteClickHandler}>
+            <button className={`place-card__bookmark-button button ${(isFavorite && `place-card__bookmark-button--active`)}`} type="button" onClick={this._favoriteClickHandler}>
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
@@ -72,7 +73,7 @@ class PlaceCard extends React.PureComponent {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href={`/offer/` + id}>{title}</a>
+            <Link to={`/offer/` + id}>{title}</Link>
           </h2>
           <p className="place-card__type">{type}</p>
         </div>
@@ -95,7 +96,9 @@ PlaceCard.propTypes = {
   onCardHover: PropTypes.func.isRequired,
   onCardHoverOut: PropTypes.func.isRequired,
   isFavorite: PropTypes.bool.isRequired,
+  isFavoriteList: PropTypes.bool.isRequired,
   onClickToAuthRequire: PropTypes.func,
+  changeFavoriteStatus: PropTypes.func,
   isAuthorizationRequired: PropTypes.bool.isRequired,
 };
 

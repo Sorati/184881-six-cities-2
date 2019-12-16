@@ -5,7 +5,7 @@ exports[`Places option list correctly renders with data 1`] = `
   className="places__options places__options--custom places__options--opened"
 >
   <li
-    className="places__option places__option--active"
+    className="places__option false"
     onClick={[Function]}
     tabIndex="0"
   >

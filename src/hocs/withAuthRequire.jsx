@@ -7,7 +7,7 @@ const withAuthReqiure = (Component) => {
       super(props);
 
       this.state = {
-        needRedirect: false,
+        needAuth: false,
       };
 
       this.setAuthStateHandler = this
@@ -15,12 +15,12 @@ const withAuthReqiure = (Component) => {
       .bind(this);
     }
 
-    setAuthStateHandler(data) {
-      this.setState({needRedirect: data});
+    setAuthStateHandler(payload) {
+      this.setState({needAuth: payload});
     }
 
     render() {
-      if (this.state.needRedirect) {
+      if (this.state.needAuth) {
         return <Redirect to="/login"/>;
       } else {
         return <Component {...this.props} onClickToAuthRequire={this.setAuthStateHandler}/>;

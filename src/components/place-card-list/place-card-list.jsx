@@ -11,32 +11,25 @@ class PlaceCardList extends React.PureComponent {
     this.props.onSelectActiveElement(card);
   }
 
-  _sortCards(type, cards) {
-    switch (type) {
-      case `Popular`:
-        return cards;
-      case `Price: low to high`:
-        return cards.sort((a, b) => a.price - b.price);
-      case `Price: high to low`:
-        return cards.sort((a, b) => b.price - a.price);
-      case `Top rated first`:
-        return cards.sort((a, b) => b.rating - a.rating);
+  render() {
+    const {cards, isNearList, isFavoriteList} = this.props;
+
+    let listClassName;
+    const placesListClasses = ` places__list tabs__content`;
+
+    if (isNearList) {
+      listClassName = `near-places__list` + placesListClasses;
+    } else if (isFavoriteList) {
+      listClassName = `favorites__places`;
+    } else {
+      listClassName = `cities__places-list` + placesListClasses;
     }
 
-    return cards;
-  }
-
-  render() {
-    const {cards, sort, isNear} = this.props;
-
-    return (
-      <div
-        className={isNear
-          ? `near-places__list`
-          : `cities__places-list` + ` places__list tabs__content`}>
-        {this
-          ._sortCards(sort, cards)
-          .map((item) => {
+    if (cards.length) {
+      return (
+        <div
+          className={listClassName}>
+          {cards.map((item) => {
 
             const {
               id,
@@ -58,13 +51,30 @@ class PlaceCardList extends React.PureComponent {
               rating={rating}
               type={type}
               mark={mark}
-              isNear={isNear}
+              isNear={isNearList}
               isFavorite={isFavorite}
+              isFavoriteList={isFavoriteList}
               onCardHover={() => this.cardHoverHandler(item)}
               onCardHoverOut={() => this.cardHoverHandler(null)}/>);
           })}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className="cities">
+          <div className="cities__places-container cities__places-container--empty container">
+            <section className="cities__no-places">
+              <div className="cities__status-wrapper tabs__content">
+                <b className="cities__status">No places to stay available</b>
+                <p className="cities__status-description">We could not find any property availbale at the moment in Dusseldorf</p>
+              </div>
+            </section>
+            <div className="cities__right-section" />
+          </div>
+        </div>
+      );
+    }
+
 
   }
 }
@@ -74,7 +84,8 @@ export default withActiveItem(PlaceCardList);
 PlaceCardList.propTypes = {
   cards: PropTypes.array.isRequired,
   onSelectActiveElement: PropTypes.func.isRequired,
-  isNear: PropTypes.bool,
+  isNearList: PropTypes.bool,
+  isFavoriteList: PropTypes.bool,
   onCardHover: PropTypes.func,
   sort: PropTypes.string,
 };

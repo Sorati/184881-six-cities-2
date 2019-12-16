@@ -20,12 +20,12 @@ class SignIn extends React.PureComponent {
     this.props.loginSubmitHandler(this.state);
   }
 
-  handleChange(event) {
-    switch (event.target.name) {
+  handleChange(e) {
+    switch (e.target.name) {
       case `email`:
-        return this.setState({login: event.target.value});
+        return this.setState({login: e.target.value});
       case `password`:
-        return this.setState({password: event.target.value});
+        return this.setState({password: e.target.value});
       default:
         return null;
     }

@@ -2,7 +2,6 @@ import {connect} from 'react-redux';
 import * as ActionCreator from './actions';
 import SignIn from './sign-in';
 
-
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 });
 

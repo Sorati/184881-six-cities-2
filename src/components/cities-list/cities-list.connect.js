@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import CitiesList from './cities-list';
-import * as ActionCreator from '../app/actions';
+import * as AppActionCreator from '../app/actions';
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   activeItem: state.app.city,
@@ -9,8 +9,9 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 
 const mapDispatchToProps = (dispatch) => ({
   cityFilterClickHandler: (city) => {
-    dispatch(ActionCreator.changeCity(city));
-    dispatch((...args) => ActionCreator.getOffers(...args));
+    dispatch(AppActionCreator.changeCity(city));
+    dispatch(AppActionCreator.changeOffersByCurrentCity());
+    dispatch(AppActionCreator.changeSortType(`Popular`));
   }
 });
 

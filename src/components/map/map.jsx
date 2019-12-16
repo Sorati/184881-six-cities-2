@@ -13,6 +13,17 @@ class Map extends React.PureComponent {
       mapCityCoords
     } = this.props;
 
+    const IconSize = {
+      WIDTH: 22,
+      HEIGHT: 30
+    };
+
+    const MAP_ZOOM = 12;
+    const DefaultCityCoords = {
+      LATITUDE: 52.3909553943508,
+      LONGITUDE: 4.85309666406198
+    };
+
     this.mapContainer = React.createRef();
 
     this._iconUrl = mapIconUrl
@@ -23,13 +34,13 @@ class Map extends React.PureComponent {
       : `/img/pin-active.svg`;
     this._iconSize = mapIconSize
       ? mapIconSize
-      : [22, 30];
+      : [IconSize.WIDTH, IconSize.HEIGHT];
     this._zoom = mapZoom
       ? mapZoom
-      : 12;
+      : MAP_ZOOM;
     this._city = mapCityCoords
       ? mapCityCoords
-      : [52.3909553943508, 4.85309666406198];
+      : [DefaultCityCoords.LATITUDE, DefaultCityCoords.LONGITUDE];
 
     this._icon = Leaflet.icon({iconUrl: this._iconUrl, iconSize: this._iconSize});
     this._iconActive = Leaflet.icon({iconUrl: this._activeIconUrl, iconSize: this._iconSize});

@@ -4,6 +4,11 @@ const Review = (props) => {
 
   const stringDate = new Date(date).toLocaleString(`en-US`, {month: `long`, year: `numeric`});
 
+  const UserAvatarSize = {
+    WIDTH: 54,
+    HEIGHT: 54
+  };
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
@@ -11,8 +16,8 @@ const Review = (props) => {
           <img
             className="reviews__avatar user__avatar"
             src={user.photo}
-            width={54}
-            height={54}
+            width={UserAvatarSize.WIDTH}
+            height={UserAvatarSize.HEIGHT}
             alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
